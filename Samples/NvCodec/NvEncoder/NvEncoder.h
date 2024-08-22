@@ -60,6 +60,7 @@ inline NVENCException NVENCException::makeNVENCException(const std::string& erro
 #define NVENC_API_CALL( nvencAPI )                                                                                 \
     do                                                                                                             \
     {                                                                                                              \
+        printf("NVENC_API_CALL: %s\n", #nvencAPI);                                                                 \
         NVENCSTATUS errorCode = nvencAPI;                                                                          \
         if( errorCode != NV_ENC_SUCCESS)                                                                           \
         {                                                                                                          \
@@ -313,13 +314,13 @@ protected:
     NV_ENC_BUFFER_FORMAT GetPixelFormat() const { return m_eBufferFormat; }
 
     /**
-    *  @brief This function is used to submit the encode commands to the  
+    *  @brief This function is used to submit the encode commands to the
     *         NVENC hardware.
     */
     NVENCSTATUS DoEncode(NV_ENC_INPUT_PTR inputBuffer, NV_ENC_OUTPUT_PTR outputBuffer, NV_ENC_PIC_PARAMS *pPicParams);
 
     /**
-    *  @brief This function is used to submit the encode commands to the 
+    *  @brief This function is used to submit the encode commands to the
     *         NVENC hardware for ME only mode.
     */
     NVENCSTATUS DoMotionEstimation(NV_ENC_INPUT_PTR inputBuffer, NV_ENC_INPUT_PTR inputBufferForReference, NV_ENC_OUTPUT_PTR outputBuffer);

@@ -199,6 +199,7 @@ void EncodeGL(char *szInFilePath, char *szOutFilePath, int nWidth, int nHeight,
             enc.EndEncode(vPacket);
         }
         nFrame += (int)vPacket.size();
+        printf("encoded %d frames. total=%d\n", (int)vPacket.size(), nFrame);
         for (std::vector<uint8_t> &packet : vPacket)
         {
             fpOut.write(reinterpret_cast<char*>(packet.data()), packet.size());

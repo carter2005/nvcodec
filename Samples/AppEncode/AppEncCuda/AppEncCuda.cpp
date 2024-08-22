@@ -155,7 +155,7 @@ public:
 
 		ck(cuCtxPopCurrent(NULL));
 
-		// Open file to dump CRC 
+		// Open file to dump CRC
 		if (bCRC)
 		{
 			crcFile = std::string(outFilePath) + "_crc.txt";
@@ -486,6 +486,7 @@ void EncodeCuda(int nWidth, int nHeight, NV_ENC_BUFFER_FORMAT eFormat, NvEncoder
 			pEnc->EndEncode(vPacket);
 		}
 		nFrame += (int)vPacket.size();
+		printf("encoded frame to %d\n\n", nFrame);
 		for (std::vector<uint8_t> &packet : vPacket)
 		{
 			// For each encoded packet
