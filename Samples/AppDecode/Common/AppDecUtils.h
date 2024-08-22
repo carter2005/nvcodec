@@ -142,6 +142,7 @@ static void createCudaContext(CUcontext* cuContext, int iGpu, unsigned int flags
     ck(cuDeviceGetName(szDeviceName, sizeof(szDeviceName), cuDevice));
     std::cout << "GPU in use: " << szDeviceName << std::endl;
     ck(cuCtxCreate(cuContext, flags, cuDevice));
+    printf("cuCtxCreate %p\n", cuContext);
 }
 
 /**

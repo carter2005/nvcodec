@@ -69,6 +69,7 @@ inline NVDECException NVDECException::makeNVDECException(const std::string& erro
 #define NVDEC_API_CALL( cuvidAPI )                                                                                 \
     do                                                                                                             \
     {                                                                                                              \
+        printf("NVDEC_API_CALL: %s\n", #cuvidAPI);                                                                 \
         CUresult errorCode = cuvidAPI;                                                                             \
         if( errorCode != CUDA_SUCCESS)                                                                             \
         {                                                                                                          \
@@ -112,7 +113,7 @@ public:
     *  @brief  This function is used to get the output frame width.
     *  NV12/P016 output format width is 2 byte aligned because of U and V interleave
     */
-    int GetWidth() { assert(m_nWidth); return (m_eOutputFormat == cudaVideoSurfaceFormat_NV12 || m_eOutputFormat == cudaVideoSurfaceFormat_P016) 
+    int GetWidth() { assert(m_nWidth); return (m_eOutputFormat == cudaVideoSurfaceFormat_NV12 || m_eOutputFormat == cudaVideoSurfaceFormat_P016)
                                                 ? (m_nWidth + 1) & ~1 : m_nWidth; }
 
     /**
@@ -134,7 +135,7 @@ public:
     *  @brief  This function is used to get the number of chroma planes.
     */
     int GetNumChromaPlanes() { assert(m_nNumChromaPlanes); return m_nNumChromaPlanes; }
-    
+
     /**
     *   @brief  This function is used to get the current frame size based on pixel format.
     */
@@ -212,7 +213,7 @@ public:
 
     /**
     *   @brief  This function unlocks the frame buffer and makes the frame buffers available for write again
-    *   @param  ppFrame - pointer to array of frames that are to be unlocked	
+    *   @param  ppFrame - pointer to array of frames that are to be unlocked
     *   @param  nFrame - number of frames to be unlocked
     */
     void UnlockFrame(uint8_t **pFrame);
@@ -271,7 +272,7 @@ private:
     /**
     *   @brief  Callback function to be registered for getting a callback when all the unregistered user SEI Messages are parsed for a frame.
     */
-    static int CUDAAPI HandleSEIMessagesProc(void *pUserData, CUVIDSEIMESSAGEINFO *pSEIMessageInfo) { return ((NvDecoder *)pUserData)->GetSEIMessage(pSEIMessageInfo); } 
+    static int CUDAAPI HandleSEIMessagesProc(void *pUserData, CUVIDSEIMESSAGEINFO *pSEIMessageInfo) { return ((NvDecoder *)pUserData)->GetSEIMessage(pSEIMessageInfo); }
 
     /**
     *   @brief  This function gets called when a sequence is ready to be decoded. The function also gets called
@@ -286,7 +287,7 @@ private:
     int HandlePictureDecode(CUVIDPICPARAMS *pPicParams);
 
     /**
-    *   @brief  This function gets called after a picture is decoded and available for display. Frames are fetched and stored in 
+    *   @brief  This function gets called after a picture is decoded and available for display. Frames are fetched and stored in
         internal buffer
     */
     int HandlePictureDisplay(CUVIDPARSERDISPINFO *pDispInfo);
@@ -300,7 +301,7 @@ private:
     *   @brief  This function gets called when all unregistered user SEI messages are parsed for a frame
     */
     int GetSEIMessage(CUVIDSEIMESSAGEINFO *pSEIMessageInfo);
- 
+
     /**
     *   @brief  This function reconfigure decoder if there is a change in sequence params.
     */
@@ -315,7 +316,7 @@ private:
     // dimension of the output
     unsigned int m_nWidth = 0, m_nLumaHeight = 0, m_nChromaHeight = 0;
     unsigned int m_nNumChromaPlanes = 0;
-    // height of the mapped surface 
+    // height of the mapped surface
     int m_nSurfaceHeight = 0;
     int m_nSurfaceWidth = 0;
     cudaVideoCodec m_eCodec = cudaVideoCodec_NumCodecs;

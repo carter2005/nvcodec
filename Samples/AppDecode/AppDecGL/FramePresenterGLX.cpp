@@ -113,6 +113,8 @@ void FramePresenterGLX::unmapBufferObject() {
 
     frameFeeder.push_back(currentFrame);
 
+    printf("put decoded frame into frameFeeder: currentFrame=%d\n", currentFrame);
+
     // CurrentFrame goes from between 0 and (BUFFER_COUNT - 1)
     currentFrame = (currentFrame + 1) % BUFFER_COUNT;
 }
@@ -138,7 +140,7 @@ void FramePresenterGLX::Render() {
     glDisable(GL_DEPTH_TEST);
 
     while (!endOfDecoding) {
-
+        printf("render by glx\n");
         currentRender = frameFeeder.front();
 
         // Bind OpenGL buffer object and upload the data

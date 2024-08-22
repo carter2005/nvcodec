@@ -74,6 +74,7 @@ int Decode(CUcontext cuContext, char *szInFilePath) {
     do {
         demuxer.Demux(&pVideo, &nVideoBytes);
         nFrameReturned = dec.Decode(pVideo, nVideoBytes);
+        printf("dec.Decode: nFrame=%d nFrameReturned=%d nVideoBytes=%d\n", nFrame, nFrameReturned, nVideoBytes);
         if (!nFrame && nFrameReturned)
             LOG(INFO) << dec.GetVideoInfo();
 
@@ -114,6 +115,7 @@ int main(int argc, char **argv)
         ParseCommandLine(argc, argv, szInFilePath, NULL, iGpu, NULL, NULL);
         CheckInputFile(szInFilePath);
 
+        printf("cuInit(0)\n");
         ck(cuInit(0));
         int nGpu = 0;
         ck(cuDeviceGetCount(&nGpu));
@@ -130,6 +132,7 @@ int main(int argc, char **argv)
         std::cout << "Decode with NvDecoder." << std::endl;
         Decode(cuContext, szInFilePath);
 
+        printf("cuCtxDestroy %p\n", &cuContext);
         ck(cuCtxDestroy(cuContext));
     }
     catch(const std::exception& ex)
